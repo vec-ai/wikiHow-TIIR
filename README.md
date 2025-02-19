@@ -4,8 +4,8 @@
 </div>
 
 <p align="center">
-<a href="https://arxiv.org">
-  <img src="https://img.shields.io/badge/Arxiv-TBD-orange.svg"></a> 
+<a href="https://arxiv.org/abs/2502.12799">
+  <img src="https://img.shields.io/badge/Arxiv-2502.12799-orange.svg"></a> 
 <a href="https://opensource.org/license/mit">
   <img src="https://img.shields.io/badge/License-MIT-green.svg"></a> 
 <a href="https://github.com/vec-ai/wikiHow-TIIR/pulls">
