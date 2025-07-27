@@ -34,11 +34,75 @@ Experiments demonstrate that simple adaption of existing models does not consist
 
 <img src="./assets/results.jpg"  height="320px"></a>
 
+
+## Dataset
+
+The dataset has been open-sourced on [hf-link](https://huggingface.co/datasets/vec-ai/wikiHow-TIIR). Please download it and place it in the `data` folder.
+
+
+## Evaluation
+
+- Embedding Generate
+  ```shell
+  <!-- Two-stream Models -->
+    python ./src/gen_embeddings_clip.py \
+      --out_path $out_path \
+      --model_name_or_path $model_name_or_path \
+      --qrels_path data/qrels.jsonl \
+      --doc_path data/docs.jsonl \
+      --query_path data/queries.jsonl \
+      --doc_image_root data/doc_images/ \
+      --batch_size 16 \
+      --it_type $it_type \
+      --image_type $image_type \
+      --model $model \
+      --mixed_precision fp16 
+  ```
+
+  ```shell
+  <!-- Single-image Multimodal Models -->
+    accelerate launch --num_processes 1 ./src/gen_embeddings_multigpu.py \
+      --out_path $out_path \
+      --model_name_or_path $model_name_or_path \
+      --qrels_path data/qrels.jsonl \
+      --doc_path data/docs.jsonl \
+      --query_path data/queries.jsonl \
+      --doc_image_root data/doc_images/ \
+      --batch_size 4 \
+      --model $model \
+      --mixed_precision bf16 
+  ```
+
+  ```shell
+  <!-- Text Models -->
+    python ./src/gen_embeddings_text.py \
+      --out_path $out_path \
+      --model_name_or_path $model_name_or_path \
+      --qrels_path data/qrels.jsonl \
+      --doc_path data/docs.jsonl \
+      --query_path data/queries.jsonl \
+      --doc_image_root data/doc_images/ \
+      --batch_size 64 \
+      --model $model \
+      --maxtoken $maxtoken \
+      --mixed_precision bf16 
+  ```
+
+- Retrieval
+  ```shell
+    python ./src/retrieval.py   \
+      --query_embed_path  $out_path/query_embedding_${model}.pkl \
+      --doc_embed_path $out_path/doc_embedding_${model}.pkl \
+      --out_path $out_path \
+      --model $model \
+      --dim $dim
+  ```
 ## Todo
 
 - [ ] Release code for model training and evaluation.
-- [ ] Release code for data curation.
-- [ ] Release the `wikiHow-TIIR` dataset.
+- [x] Release code for evaluation.
+- [x] Release code for data curation.
+- [x] Release the `wikiHow-TIIR` dataset.
 
 ## Acknowledgments
 
