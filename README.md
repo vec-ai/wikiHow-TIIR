@@ -1,6 +1,6 @@
 
 <div align="center">
-<h1>Towards Text-Image Interleaved Retrieval</h1> 
+<h1>[ACL 2025] Towards Text-Image Interleaved Retrieval</h1> 
 </div>
 
 <p align="center">
@@ -99,10 +99,35 @@ The dataset has been open-sourced on [hf-link](https://huggingface.co/datasets/v
   ```
 ## Todo
 
-- [ ] Release code for model training and evaluation.
+- [ ] Release code for model training.
 - [x] Release code for evaluation.
 - [x] Release code for data curation.
 - [x] Release the `wikiHow-TIIR` dataset.
+
+## Cite
+```
+@inproceedings{zhang-etal-2025-towards,
+    title = "Towards Text-Image Interleaved Retrieval",
+    author = "Zhang, Xin  and
+      Dai, Ziqi  and
+      Li, Yongqi  and
+      Zhang, Yanzhao  and
+      Long, Dingkun  and
+      Xie, Pengjun  and
+      Zhang, Meishan  and
+      Yu, Jun  and
+      Li, Wenjie  and
+      Zhang, Min",
+    booktitle = "Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2025",
+    address = "Vienna, Austria",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.acl-long.214/",
+    pages = "4254--4269",
+    ISBN = "979-8-89176-251-0",
+}
+```
 
 ## Acknowledgments
 
