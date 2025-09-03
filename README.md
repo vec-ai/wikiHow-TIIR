@@ -1,6 +1,6 @@
 
 <div align="center">
-<h1>[ACL 2025] Towards Text-Image Interleaved Retrieval</h1> 
+<h1>Towards Text-Image Interleaved Retrieval</h1> 
 </div>
 
 <p align="center">
@@ -39,10 +39,51 @@ Experiments demonstrate that simple adaption of existing models does not consist
 
 The dataset has been open-sourced on [hf-link](https://huggingface.co/datasets/vec-ai/wikiHow-TIIR). Please download it and place it in the `data` folder.
 
+## Train
+  ```shell
+    CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 accelerate launch --num_processes=8 --mixed_precision=bf16 \
+      ./train/train.py \
+      --output_dir $output_dir \
+      --qrels_path $qrels_path \
+      --doc_path $doc_path \
+      --query_path $query_path \
+      --doc_image_root $doc_image_root \
+      --model_name_or_path $model_path \
+      --do_train \
+      --num_train_epochs $num_train_epochs \
+      --per_device_train_batch_size 4 \
+      --bf16 \
+      --learning_rate $lr \
+      --warmup_ratio 0.1 \
+      --dataloader_num_workers 4 \
+      --logging_steps 50 \
+      --do_lora true \
+      --gc_query_chunk_size 1 \
+      --gc_doc_chunk_size 1 \
+      --overwrite_output_dir
+  ```
+
 
 ## Evaluation
 
 - Embedding Generate
+
+  ```shell
+  <!-- MME -->
+    python ./src/gen_embeddings_ds.py \
+      --out_path $out_path \
+      --model_name_or_path $base_model_path \
+      --checkpoint $checkpoint \
+      --image_token_num $image_token_num \
+      --qrels_path data/qrels.jsonl \
+      --doc_path data/docs.jsonl \
+      --query_path data/queries.jsonl \
+      --doc_image_root data/doc_images/ \
+      --batch_size 8 \
+      --maxtoken 4096 \
+      --mixed_precision bf16 
+  ```
+
   ```shell
   <!-- Two-stream Models -->
     python ./src/gen_embeddings_clip.py \
@@ -99,35 +140,10 @@ The dataset has been open-sourced on [hf-link](https://huggingface.co/datasets/v
   ```
 ## Todo
 
-- [ ] Release code for model training.
+- [x] Release code for model training and evaluation.
 - [x] Release code for evaluation.
 - [x] Release code for data curation.
 - [x] Release the `wikiHow-TIIR` dataset.
-
-## Cite
-```
-@inproceedings{zhang-etal-2025-towards,
-    title = "Towards Text-Image Interleaved Retrieval",
-    author = "Zhang, Xin  and
-      Dai, Ziqi  and
-      Li, Yongqi  and
-      Zhang, Yanzhao  and
-      Long, Dingkun  and
-      Xie, Pengjun  and
-      Zhang, Meishan  and
-      Yu, Jun  and
-      Li, Wenjie  and
-      Zhang, Min",
-    booktitle = "Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
-    month = jul,
-    year = "2025",
-    address = "Vienna, Austria",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2025.acl-long.214/",
-    pages = "4254--4269",
-    ISBN = "979-8-89176-251-0",
-}
-```
 
 ## Acknowledgments
 
